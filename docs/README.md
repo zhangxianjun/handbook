@@ -1,2 +1,7 @@
-# handbook
-Developer Work Manual
+### 概览
+#### 意义
+* 服务业务
+* 服务团队
+
+#### 落实
+* 寻找不变的事物
