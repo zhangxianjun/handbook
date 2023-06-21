@@ -1,0 +1,25 @@
+@startmindmap
+* code
+** 2XX
+*** 200
+**** {} 或者 []
+** 4XX
+*** 400
+**** {"code":4000, "提示性错误，与用户操作相关"}
+**** {"code":4100, "需要用户根据code提示做操作"}
+**** ClientException
+***** DataValidException
+****** 数据验证异常
+***** BusinessException
+****** 业务处理异常
+*** 440
+**** {"code":4101, "Login time out"}
+** 5XX
+*** 500
+**** {"code":5000, "提示性错误，服务器错误"}
+**** ServerException
+***** InnerException
+****** 同一个业务微服务之间内部调用
+***** ExternalException
+****** 请求短信服务、邮件服务
+@endmindmap
