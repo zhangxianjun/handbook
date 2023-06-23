@@ -1,4 +1,8 @@
 ### 介绍
+
+框架是工具而不是生活信条，我们一定要带着怀疑的态度审视每一个框架。是的，采用框架可能会很有帮助，但采用它们的成本呢？我们一定要懂得权衡如何使用一个框架，如何保护自己。
+
+
 #### 一.服务级别
 * 服务与服务
 * 服务与Web
@@ -39,6 +43,73 @@ src
 ├── test
 └── pom.xml
 ```
+
+##### 3.状态码
+* 2XX
+
+200，响应数据以JSON形式放到Body里面，例如：{} 或者 []。
+
+* 4XX
+
+400，1.仅提示，例如：
+```json
+{"code":4000, "msg":"提示性错误，与用户操作相关"}
+```
+2.有操作，例如：
+```json
+{"code":4100, "msg":"需要用户根据code提示做操作"}
+```
+
+* 5XX
+
+500
+```json
+{"code":5000, "msg":"提示性错误，服务器错误"}
+```
+
+##### 4.异常
+* 400
+
+业务处理异常：BusinessException。
+
+* 500
+
+请求短信服务、邮件服务：ExternalException；微服务之间内部调用：InnerException。
+
+##### 5.日志
+* 日志流程
+
+日志输出到控制台，fluent-bit采集日志，存储到loki，Grafana查询
+
+* 日志格式
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!--debug：默认为false；若设置为true，打印出logback内部日志信息-->
+<!--scan：默认值为true，若设置为true，配置文件如果发生改变，将会被重新加载-->
+<!--scanPeriod：与scan配合使用，当scan为true时，此属性生效，默认的时间间隔为1分钟-->
+<configuration>
+    <!--默认上下文名称是default，用于标识应用-->
+    <contextName>default</contextName>
+    <!--定义属性-->
+    <!--<property name="path" value="./log" />-->
+    <!--定义属性，读取application.properties-->
+    <!--<springProperty scope="context" name="log.path" source="catalina.base"/>-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="utf-8">
+            <!--定义打印值：时间，接口名，用户唯一标识，线程，日志级别，类信息，业务信息 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %X{X_API_NAME} %X{X_USER_ID} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="console"/>
+    </root>
+</configuration>
+```
+
+
+##### 6.性能
 
 
 
