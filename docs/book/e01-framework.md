@@ -108,6 +108,40 @@ src
 </configuration>
 ```
 
+```text
+2023-06-23 20:40:29.401  INFO 47503 --- [nio-8080-exec-1] t.flint.archetype.kit.gateway.Gateway    : afterCompletion
+2023-06-23 20:40:58.278  INFO 47503 --- [nio-8080-exec-2] t.flint.archetype.kit.gateway.Gateway    : preHandle
+2023-06-23 20:41:03.973  INFO 47503 --- [nio-8080-exec-2] t.flint.archetype.kit.gateway.Gateway    : preHandlePOST
+2023-06-23 20:41:03.976  INFO 47503 --- [nio-8080-exec-2] t.f.archetype.controller.DemoController  : query 18698581176
+2023-06-23 20:41:03.977 ERROR 47503 --- [nio-8080-exec-2] t.f.a.k.g.ControllerExceptionAdvice      : 1==1
+
+
+2023-06-23 20:46:06.048   INFO  [http-nio-8080-exec-1] team.flint.archetype.kit.gateway.Gateway - preHandle
+2023-06-23 20:46:06.048   INFO  [http-nio-8080-exec-1] team.flint.archetype.kit.gateway.Gateway - preHandlePOST
+2023-06-23 20:46:06.169   INFO  [http-nio-8080-exec-1] team.flint.archetype.controller.DemoController - query 18698581176
+2023-06-23 20:46:10.520   ERROR [http-nio-8080-exec-1] t.f.a.kit.gateway.ControllerExceptionAdvice - 1==1
+java.lang.RuntimeException: 1==1
+```
+
+```text
+1. Filter1 (Before)
+2. Filter2 (Before)
+3. ...
+4. HandlerInterceptor1 (preHandle)
+5. HandlerInterceptor2 (preHandle)
+6. ...
+7. Controller's Method
+8. ...
+9. HandlerInterceptor2 (postHandle)
+10. HandlerInterceptor1 (postHandle)
+11. ...
+12. ControllerAdvice (Exception Handling)
+13. HandlerInterceptor2 (afterCompletion)
+14. HandlerInterceptor1 (afterCompletion)
+15. Filter2 (After)
+16. Filter1 (After)
+
+```
 
 ##### 6.性能
 
